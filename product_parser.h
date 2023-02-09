@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include "product.h"
+#include <vector>
 
 class ProductParser
 {

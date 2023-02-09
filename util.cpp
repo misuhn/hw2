@@ -1,6 +1,7 @@
 #include <iostream>
 #include <sstream>
 #include <cctype>
+#include <vector>
 #include <algorithm>
 #include "util.h"
 
@@ -13,18 +14,41 @@ std::string convToLower(std::string src)
 
 /** Complete the code to convert a string containing a rawWord
     to a set of words based on the criteria given in the assignment **/
-std::set<std::string> parseStringToWords(string rawWords)
+std::set<std::string> parseStringToWords(string line)
 {
-
-
-
-
-
-
-
-
-
-
+std::set<std::string> result;
+    std::stringstream ss(line);
+    std::string word;
+    while (ss >> word) {
+        for (int i = 0, len = word.length(); i < len; i++) {
+            if (ispunct(word[i])) {
+                if (i == 0) {
+                    word = word.substr(1);
+                    i--;
+                    len--;
+                } else if (i == len - 1) {
+                    word = word.substr(0, len - 1);
+                } else {
+                    std::string left = word.substr(0, i);
+                    std::string right = word.substr(i + 1);
+                    if (left.length() > 1) {
+                        result.insert(left);
+                    }
+                    if (right.length() > 1) {
+                        word = right;
+                        i = -1;
+                        len = right.length();
+                    } else {
+                        break;
+                    }
+                }
+            }
+        }
+        if (word.length() > 1) {
+            result.insert(word);
+        }
+    }
+    return result;
 }
 
 /**************************************************
